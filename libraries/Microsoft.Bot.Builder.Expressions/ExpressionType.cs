@@ -63,6 +63,7 @@ namespace Microsoft.Bot.Builder.Expressions
         public const string Foreach = "foreach";
         public const string Union = "union";
         public const string Intersection = "intersection";
+        public const string Skip = "skip";
 
         // DateTime
         public const string AddDays = "addDays";

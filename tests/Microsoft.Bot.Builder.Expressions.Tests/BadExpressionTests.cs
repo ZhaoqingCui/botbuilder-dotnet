@@ -249,6 +249,11 @@ namespace Microsoft.Bot.Builder.Expressions.Tests
             Test("foreach(items, x, sum(x))"),// third paramter error
             Test("union(one, two)"),// should have collection param
             Test("intersection(one, two)"),// should have collection param
+            Test("skip(hello)"), // should have two parameters
+            Test("skip(hello, world, one)"), //should have two parameters
+            Test("skip(hello, one)"), // first param should be array
+            Test("skip(items, hello)"), // second param should be integer
+            Test("skip(items, one + 0.5)"), // second param should be integer
             # endregion
 
             # region Object manipulation and construction functions test

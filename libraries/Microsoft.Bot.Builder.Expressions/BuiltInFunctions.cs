@@ -1125,6 +1125,51 @@ namespace Microsoft.Bot.Builder.Expressions
             expression.Children[2] = RewriteAccessor(expression.Children[2], iteratorName);
         }
 
+        private static (object value, string error) Skip(Expression expression, object state)
+        {
+            object result = null;
+            string error;
+            object arr = null;
+            (arr, error) = expression.Children[0].TryEvaluate(state);
+
+            if (error == null)
+            {
+                if (TryParseList(arr, out var list))
+                {
+                    object start;
+                    var startInt = 0;
+                    var startExpr = expression.Children[1];
+                    (start, error) = startExpr.TryEvaluate(state);
+                    if (error == null)
+                    {
+                        if (start == null || !start.IsInteger())
+                        {
+                            error = $"{startExpr} is not an integer.";
+                        }
+                        else
+                        {
+                            startInt = (int)start;
+                            if (startInt < 0 || startInt >= list.Count)
+                            {
+                                error = $"{startExpr}={start} which is out of range for {arr}";
+                            }
+                        }
+
+                        if (error == null)
+                        {
+                            result = list.OfType<object>().Skip(startInt).ToList();
+                        }
+                    }
+                }
+                else
+                {
+                    error = $"{expression.Children[0]} is not array.";
+                }
+            }
+
+            return (result, error);
+        }
+
         private static Expression RewriteAccessor(Expression expression, string localVarName)
         {
             if (expression.Type == ExpressionType.Accessor)
@@ -1356,6 +1401,11 @@ namespace Microsoft.Bot.Builder.Expressions
                         }, VerifyList),
                     ReturnType.Object,
                     ValidateAtLeastOne),
+                new ExpressionEvaluator(
+                    ExpressionType.Skip,
+                    Skip,
+                    ReturnType.Object,
+                    (expression) => ValidateOrder(expression, null, ReturnType.Object, ReturnType.Number)),
 
                 // Booleans
                 Comparison(ExpressionType.LessThan, args => args[0] < args[1], ValidateBinaryNumberOrString, VerifyNumberOrString),

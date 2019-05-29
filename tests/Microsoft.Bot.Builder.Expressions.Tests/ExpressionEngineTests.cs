@@ -376,7 +376,7 @@ namespace Microsoft.Bot.Builder.Expressions.Tests
             Test("count(union(createArray('a', 'b'), createArray('b', 'c'), createArray('b', 'd')))", 4),
             Test("count(intersection(createArray('a', 'b')))", 2),
             Test("count(intersection(createArray('a', 'b'), createArray('b', 'c'), createArray('b', 'd')))", 1),
-            
+            Test("skip(createArray('a', 'b', 'c', 'd'), 2)", new List<object>{"c", "d"}),
             # endregion
 
             # region  Object manipulation and construction functions
