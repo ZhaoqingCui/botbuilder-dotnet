@@ -43,9 +43,17 @@ namespace Microsoft.Bot.Builder.TestBot.Json
                 }
             };
 
-            LoadDialogs();
+            LoadDeclarativeDialogs();
         }
 
+        private void LoadDeclarativeDialogs()
+        {
+            System.Diagnostics.Trace.TraceInformation("Loading resources...");
+            var rootDialogFile = "CalendarBot.main.dialog";
+            var rootFile = resourceExplorer.GetResource(rootDialogFile);
+            rootDialog = DeclarativeTypeLoader.Load<AdaptiveDialog>(rootFile, resourceExplorer, DebugSupport.SourceRegistry);
+            System.Diagnostics.Trace.TraceInformation("Done loading resources.");
+        }
 
         private void LoadDialogs()
         {
