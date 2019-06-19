@@ -106,7 +106,7 @@
                             "steps": [
                                 {
                                     "$type": "Microsoft.SendActivity",
-                                    "activity": "Set conversation.order.topping to {join(foreach(@topping, list, first(list)), ', ')}"
+                                  "activity": "Set conversation.order.topping to {join(foreach(@topping, list, first(list)), ', ')}"
                                 },
                                 {
                                     "$type": "Microsoft.SetProperty",

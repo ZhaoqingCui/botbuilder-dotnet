@@ -33,4 +33,6 @@
     <ProjectReference Include="..\..\libraries\Microsoft.Bot.Connector\Microsoft.Bot.Connector.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties samples_4sandwich_4sandwich_1main_1dialog__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>
